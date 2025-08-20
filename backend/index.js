@@ -5,6 +5,7 @@ const db = require("./config/firebase");
 const chatRoutes = require("./routes/chatRoutes");
 const universityRoutes = require("./routes/universityRoutes");
 
+require("dotenv").config();
 const app = express();
 
 app.use(cors());
