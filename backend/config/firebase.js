@@ -1,19 +1,12 @@
 const admin = require("firebase-admin");
+const path = require("path");
 
-// service account json to be plugged in here
-let db;
+const serviceAccount = require(path.join(__dirname, "serviceAccountKey.json"));
 
-try {
-  if (!admin.apps.length) {
-    admin.initializeApp({
-      credential: admin.credential.applicationDefault(),
-    });
-  }
-  db = admin.firestore();
-  console.log("Firestore initialized (placeholder config)");
-} catch (error) {
-  console.error("Firestore not connected yet:", error.message);
-  db = null;
-}
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
+const db = admin.firestore();
 
 module.exports = db;
