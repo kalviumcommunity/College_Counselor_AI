@@ -9,6 +9,16 @@ export default function Chat() {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
+  // Add welcome message on first load
+  useEffect(() => {
+    const welcomeMessage = {
+      role: "ai",
+      text: "👋 Hello! I'm your College Counselor AI. How can I assist you with your college journey today?",
+      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    };
+    setMessages([welcomeMessage]);
+  }, []);
+  
   // Auto-scroll
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
