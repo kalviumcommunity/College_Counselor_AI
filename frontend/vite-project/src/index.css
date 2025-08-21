@@ -1,6 +1,8 @@
+/* eslint-disable */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* eslint-enable */
 
 /* Optional: custom dark mode styles */
 :root {

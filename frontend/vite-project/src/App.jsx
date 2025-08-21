@@ -1,69 +1,34 @@
-import { BrowserRouter as Router, Routes, Route, NavLink, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Chat from "./pages/Chat";
 import About from "./pages/About";
 
-function App() {
+export default function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col">
+      <div className="flex flex-col h-screen">
         {/* Navbar */}
-        <nav className="bg-zinc-900 text-white px-6 py-4 flex items-center justify-between shadow-md">
-          {/* Brand / Title (clickable to Home) */}
-          <Link
-            to="/"
-            className="text-xl font-bold text-blue-600 hover:text-blue-500 transition-colors"
-          >
+        <nav className="bg-blue-600 text-white p-4 flex justify-between items-center">
+          <Link to="/" className="font-bold text-lg">
             College Counselor AI
           </Link>
-
-          {/* Navigation Links */}
-          <div className="flex gap-6">
-            <NavLink
-              to="/"
-              end
-              className={({ isActive }) =>
-                `hover:text-blue-400 transition-colors ${
-                  isActive ? "text-blue-600 font-semibold" : ""
-                }`
-              }
-            >
-              Home
-            </NavLink>
-            <NavLink
-              to="/chat"
-              className={({ isActive }) =>
-                `hover:text-blue-400 transition-colors ${
-                  isActive ? "text-blue-600 font-semibold" : ""
-                }`
-              }
-            >
-              Chat
-            </NavLink>
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                `hover:text-blue-400 transition-colors ${
-                  isActive ? "text-blue-600 font-semibold" : ""
-                }`
-              }
-            >
-              About
-            </NavLink>
+          <div className="space-x-4">
+            <Link to="/">Home</Link>
+            <Link to="/chat">Chat</Link>
+            <Link to="/about">About</Link>
           </div>
         </nav>
 
-        {/* Main content */}
-        <main className="flex-1 p-6">
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/about" element={<About />} />
           </Routes>
-        </main>
+        </div>
+        
       </div>
     </Router>
   );
 }
-
-export default App;

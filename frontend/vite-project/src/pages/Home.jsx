@@ -1,28 +1,13 @@
-import { useEffect, useState } from "react";
-import { fetchHello, fetchFirestore } from "../api";
-
 export default function Home() {
-  const [backendMsg, setBackendMsg] = useState("");
-  const [firestoreMsg, setFirestoreMsg] = useState("");
-
-  useEffect(() => {
-    fetchHello()
-      .then((data) => setBackendMsg(data.message))
-      .catch((err) => console.error("Error fetching backend:", err));
-
-    fetchFirestore()
-      .then((data) => setFirestoreMsg(data.data?.message || "No message found"))
-      .catch((err) => console.error("Error fetching Firestore:", err));
-  }, []);
-
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold">Home Page</h1>
-      <p className="mt-2 text-lg text-gray-700">
-        Backend says: <span className="font-mono">{backendMsg}</span>
-      </p>
-      <p className="mt-2 text-lg text-gray-700">
-        Firestore says: <span className="font-mono">{firestoreMsg}</span>
+    <div className="flex flex-col items-center justify-center h-full text-center p-8">
+      <h1 className="text-4xl font-bold mb-4 text-blue-700">
+        Welcome to College Counselor AI
+      </h1>
+      <p className="text-lg text-zinc-600 max-w-2xl">
+        Your personal guide to exploring universities, courses, and career paths —
+        powered by empathy and intelligence. Start chatting with the AI to plan
+        your future with clarity and confidence.
       </p>
     </div>
   );
