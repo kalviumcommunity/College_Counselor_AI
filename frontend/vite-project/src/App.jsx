@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Chat from "./pages/Chat";
-import About from "./pages/About";
+
 
 export default function App() {
   return (
@@ -13,10 +13,13 @@ export default function App() {
             College Counselor AI
           </Link>
           <div className="space-x-4">
-            <Link to="/">Home</Link>
-            <Link to="/chat">Chat</Link>
-            <Link to="/about">About</Link>
-          </div>
+          <Link
+            to="/chat"
+            className="bg-white text-blue-600 px-3 py-1 rounded-lg font-medium hover:bg-blue-100 transition"
+          >
+            Chat
+          </Link>
+        </div>
         </nav>
 
         {/* Content */}
@@ -24,7 +27,6 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/chat" element={<Chat />} />
-            <Route path="/about" element={<About />} />
           </Routes>
         </div>
         
