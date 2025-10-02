@@ -11,8 +11,8 @@ const app = express();
 
 app.use(cors({
   origin: [
-    "http://localhost:5173", // Vite dev server
-    "https://your-netlify-app.netlify.app", // Netlify frontend deployment
+    "http://localhost:5173",
+    "https://collegecounselorai.vercel.app",
   ],
   methods: ["GET", "POST"],
 }));
