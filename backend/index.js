@@ -8,7 +8,13 @@ const universityRoutes = require("./routes/universityRoutes");
 require("dotenv").config();
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173", // Vite dev server
+    "https://your-netlify-app.netlify.app", // Netlify frontend deployment
+  ],
+  methods: ["GET", "POST"],
+}));
 app.use(express.json());
 
 // Root test
