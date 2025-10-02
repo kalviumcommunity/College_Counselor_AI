@@ -3,6 +3,10 @@ import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Bot, User } from "lucide-react";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const getTime = () =>
+  new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
 export default function Chat() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -14,7 +18,7 @@ export default function Chat() {
     const welcomeMessage = {
       role: "ai",
       text: "👋 Hello! I'm your College Counselor AI. How can I assist you with your college journey today?",
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      time: getTime(),
     };
     setMessages([welcomeMessage]);
   }, []);
@@ -30,14 +34,14 @@ export default function Chat() {
     const userMessage = {
       role: "user",
       text: input,
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      time: getTime(),
     };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/chat", {
+      const res = await fetch(`${API_BASE_URL}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
@@ -46,8 +50,8 @@ export default function Chat() {
       const data = await res.json();
       const aiMessage = {
         role: "ai",
-        text: data.reply,
-        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        text: data.reply || "⚠️ No reply from AI.",
+        time: getTime(),
       };
 
       setMessages((prev) => [...prev, aiMessage]);
@@ -55,7 +59,7 @@ export default function Chat() {
       console.error("Error talking to Gemini:", err);
       setMessages((prev) => [
         ...prev,
-        { role: "ai", text: "⚠️ Something went wrong. Try again.", time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) },
+        { role: "ai", text: "⚠️ Something went wrong. Try again.", time: getTime() },
       ]);
     } finally {
       setLoading(false);
@@ -126,19 +130,21 @@ export default function Chat() {
       {/* Input */}
       <div className="flex items-center mt-2 border rounded-full bg-white shadow px-3 py-2">
         <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="flex-1 px-3 py-2 focus:outline-none rounded-full"
-          placeholder="Type your message..."
-          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+        type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="flex-1 px-3 py-2 focus:outline-none rounded-full"
+            placeholder="Type your message..."
+            aria-label="Type your message"
+            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
         />
-        <button
-          onClick={sendMessage}
-          className="ml-2 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition"
-        >
-          Send
-        </button>
+          <button
+            onClick={sendMessage}
+            className="ml-2 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition"
+            aria-label="Send message"
+          >
+            Send
+          </button>
       </div>
     </div>
   );
