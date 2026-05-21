@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Chat from "./pages/Chat";
+import Recommendations from "./pages/Recommendations";
 
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/recommendations" element={<Recommendations />} />
           </Routes>
         </div>
         

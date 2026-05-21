@@ -6,6 +6,7 @@ const db = require("./config/firebase");
 
 const chatRoutes = require("./routes/chatRoutes");
 const universityRoutes = require("./routes/universityRoutes");
+const recommendRoutes = require("./routes/recommendRoutes");
 
 const app = express();
 
@@ -48,6 +49,7 @@ app.get("/api/test-firestore", async (req, res) => {
 // Feature routes
 app.use("/api/chat", chatRoutes);
 app.use("/api/universities", universityRoutes);
+app.use("/api/recommend", recommendRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

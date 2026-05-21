@@ -1,17 +1,26 @@
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import { Bot, User } from "lucide-react";
+import { Bot, User, Sparkles } from "lucide-react";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const getTime = () =>
   new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
 export default function Chat() {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
+
+  const userMessageCount = messages.filter((m) => m.role === "user").length;
+  const canShowRecommendations = userMessageCount >= 1;
+
+  const goToRecommendations = () => {
+    navigate("/recommendations", { state: { conversation: messages } });
+  };
 
   // Add welcome message on first load
   useEffect(() => {
@@ -126,6 +135,19 @@ export default function Chat() {
         )}
         <div ref={messagesEndRef} />
       </div>
+
+      {/* Recommendations CTA */}
+      {canShowRecommendations && (
+        <motion.button
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          onClick={goToRecommendations}
+          className="mt-3 mb-1 mx-auto flex items-center gap-2 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 text-white px-5 py-2.5 rounded-full shadow-lg font-medium transition"
+        >
+          <Sparkles size={18} />
+          Show My Recommendations
+        </motion.button>
+      )}
 
       {/* Input */}
       <div className="flex items-center mt-2 border rounded-full bg-white shadow px-3 py-2">
